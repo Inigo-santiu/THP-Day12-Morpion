@@ -12,7 +12,7 @@ class Application
   attr_accessor :game, :board_to_show, :hash
 
   def initialize
-    puts 'Eo'
+    puts 'welcome to morpion madness!!!!!'
     @game = Game.new
     @hash = @game.grid.boardcases_hash
     @board_to_show = Show.new(hash)
