@@ -13,4 +13,6 @@ class BoardCase
   end
 
 end
-binding.pry
+
+
+

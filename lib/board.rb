@@ -14,11 +14,12 @@ require_relative 'game'
 require 'pry'
 
 class Board
- attr_accessor :boardcases_hash, :turn_count
+ attr_accessor :boardcases_hash, :turn_count, :victory_condition
 
   def initialize
     @turn_count = 1
     @boardcases_hash = Hash.new
+    @victory_condition = false
     boardcase = BoardCase.new
     for x in (0..8) do
       @boardcases_hash[boardcase.position[x]] = boardcase.value[0]
@@ -28,9 +29,33 @@ class Board
   def player_selection_hash(boardcases_hash,selection,player_sign)
     if boardcases_hash.has_key?(selection) == true && boardcases_hash[selection] == " "
       boardcases_hash[selection] = player_sign ##<= recuperer la valeur du sign des players
-      puts @turn_count += 1
+      puts "Nous sommes au tour numéro #{@turn_count +=1}"
     else
       puts "error"
+    end
+  end
+
+  def victory?(boardcases_hash)
+    case !@victory_condition
+      when boardcases_hash['A1'] == boardcases_hash['A2'] && boardcases_hash['A1'] == boardcases_hash['A3'] && boardcases_hash['A3'] != " "
+        puts "Win"
+      when boardcases_hash['B1'] == boardcases_hash['B2'] && boardcases_hash['B1'] == boardcases_hash['B3'] && boardcases_hash['B3'] != " "
+        puts "Win"
+      when boardcases_hash['C1'] == boardcases_hash['C2'] && boardcases_hash['C1'] == boardcases_hash['C3'] && boardcases_hash['C3'] != " "
+        puts "Win"
+      when boardcases_hash['A1'] == boardcases_hash['B1'] && boardcases_hash['A1'] == boardcases_hash['C1'] && boardcases_hash['C1'] != " "
+        puts "Win"
+      when boardcases_hash['A2'] == boardcases_hash['B2'] && boardcases_hash['A2'] == boardcases_hash['C2'] && boardcases_hash['C2'] != " "
+        puts "Win"
+      when boardcases_hash['A3'] == boardcases_hash['B3'] && boardcases_hash['A3'] == boardcases_hash['C3'] && boardcases_hash['C3'] != " "
+        puts "Win"
+      when boardcases_hash['A1'] == boardcases_hash['B2'] && boardcases_hash['A1'] == boardcases_hash['C3'] && boardcases_hash['C3'] != " "
+        puts "Win"
+      when boardcases_hash['A3'] == boardcases_hash['B2'] && boardcases_hash['A3'] == boardcases_hash['C1'] && boardcases_hash['C1'] != " "
+        puts "Win"
+    else
+      puts 'Go on'
+      false
     end
   end
 
